@@ -194,8 +194,31 @@ class LineInTriRotView(ctx : Context) : View(ctx) {
             }
         }
 
-        fun startUpating(cb : () -> Unit) {
+        fun startUpdating(cb : () -> Unit) {
             curr.startUpdating(cb)
+        }
+    }
+
+    data class Renderer(var view : LineInTriRotView) {
+
+        private val animator : Animator = Animator(view)
+
+        private val litr : LineInTriRot = LineInTriRot(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            litr.draw(canvas, paint)
+            animator.animate {
+                litr.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            litr.startUpdating {
+                animator.start()
+            }
         }
     }
 }

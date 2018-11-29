@@ -52,7 +52,7 @@ fun Canvas.drawLITRNode(i : Int, scale : Float, paint : Paint) {
     path.lineTo(-size, size)
     drawPath(path, paint)
     clipPath(path)
-    val hGap : Float = (2 * size) / (nodes + 1)
+    val hGap : Float = (2 * size) / (lines + 1)
     for (j in 0..(lines - 1)) {
         val sc : Float = sc1.divideScale(j, lines)
         save()
@@ -228,7 +228,7 @@ class LineInTriRotView(ctx : Context) : View(ctx) {
         fun create(activity: Activity) : LineInTriRotView {
             val view : LineInTriRotView = LineInTriRotView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }

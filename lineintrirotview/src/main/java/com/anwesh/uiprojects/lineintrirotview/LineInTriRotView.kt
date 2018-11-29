@@ -31,6 +31,38 @@ fun Float.mirrorValue(a : Int, b : Int) : Float = (1 - scaleFactor()) * a.getInv
 
 fun Float.getScaleFactor(dir : Float, a : Int, b : Int) : Float = mirrorValue(a, b) * dir * scGap
 
+fun Canvas.drawLITRNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = w / (nodes + 1)
+    val sc1 : Float = scale.divideScale(0, 2)
+    val sc2 : Float = scale.divideScale(1, 2)
+    val size : Float = gap / sizeFactor
+    paint.color = color
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.style = Paint.Style.STROKE
+    save()
+    translate(gap * (i + 1), h / 2)
+    rotate(90f * sc2)
+    val path : Path = Path()
+    path.moveTo(-size, size)
+    path.lineTo(size, size)
+    path.lineTo(0f, -size)
+    path.lineTo(-size, size)
+    drawPath(path, paint)
+    clipPath(path)
+    val hGap : Float = (2 * size) / (nodes + 1)
+    for (j in 0..(lines - 1)) {
+        val sc : Float = sc1.divideScale(j, lines)
+        save()
+        translate(0f,-size + hGap + hGap * j)
+        drawLine(-size * sc, 0f, size * sc, 0f, paint)
+        restore()
+    }
+    restore()
+}
+
 class LineInTriRotView(ctx : Context) : View(ctx) {
 
     private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)

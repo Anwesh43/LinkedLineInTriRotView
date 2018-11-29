@@ -223,4 +223,12 @@ class LineInTriRotView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity: Activity) : LineInTriRotView {
+            val view : LineInTriRotView = LineInTriRotView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }
